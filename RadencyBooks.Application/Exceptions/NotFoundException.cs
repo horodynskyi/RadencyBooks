@@ -2,7 +2,7 @@
 
 public class NotFoundException : Exception
 {
-    public NotFoundException(string type, int id):base($"The entity {type} not found with id - {id}")
+    public NotFoundException(string type, int id):base($"The entity {type} was not found with id - {id}")
     {
         
     }

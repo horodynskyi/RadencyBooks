@@ -10,7 +10,7 @@ public class BookGetTenRecommendedQuery:Query<Book>,IListResultQuery
 
     public BookGetTenRecommendedQuery(string genre)
     {
-        _genre = genre.ToLower();
+        _genre = genre;
     }
 
     protected override IQueryable<Book> GetQuery(DbSet<Book> dbSet)
@@ -18,8 +18,8 @@ public class BookGetTenRecommendedQuery:Query<Book>,IListResultQuery
         return dbSet
             .Include(x => x.Ratings)
             .Include(x => x.Reviews)
-            .Where(x => x.Genre.ToLower()==_genre)
-            .OrderByDescending(x => x.Ratings.Sum(x => x.Score))
+            .Where(x => string.IsNullOrEmpty(_genre)==true || x.Genre.ToLower()==_genre.ToLower())
+            .OrderByDescending(x => x.Ratings!.Sum(r => r.Score))
             .Take(10);
 
     }
