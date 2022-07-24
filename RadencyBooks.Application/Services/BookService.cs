@@ -15,7 +15,7 @@ public class BookService:IBookService
         _repository = repository;
     }
 
-    public async Task<List<Book>> GetAllBooksAsync(string order)
+    public async Task<List<Book>> GetAllBooksAsync(string? order)
     {
         return await _repository.ListAsync(new BookGetAllOrderedQuery(order));
     }

@@ -8,7 +8,7 @@ public class BookGetAllOrderedQuery:Query<Book>,IListResultQuery
 {
     
     private readonly Func<Book,string> _order;
-    public BookGetAllOrderedQuery(string order)
+    public BookGetAllOrderedQuery(string? order)
     {
         _order = order == "author" ? book => book.Author : book => book.Title;
     }

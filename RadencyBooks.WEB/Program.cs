@@ -1,12 +1,9 @@
 using System.Reflection;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using RadencyBooks.Application;
-using RadencyBooks.Application.Interfaces;
-using RadencyBooks.Application.Models;
 using RadencyBooks.Infrastructure;
 using RadencyBooks.WEB;
 using DependencyInjection = RadencyBooks.Application.DependencyInjection;
@@ -31,11 +28,9 @@ builder.Services
     .AddInfrastructure();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.AddTransient(ser => ser.GetRequiredService<IOptions<AppSettings>>().Value);
-builder.Services.AddTransient<IRepository<Book>, Repository<Book>>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IRepository<Book>, Repository<Book>>();
 
 var app = builder.Build();
 app.AddSeedData();

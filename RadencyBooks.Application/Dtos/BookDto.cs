@@ -15,9 +15,9 @@ public class BookDto:IMap
     {
         profile.CreateMap<Book, BookDto>()
             .ForMember(dest => dest.ReviewsNumber, map =>
-                map.MapFrom(s => s.Reviews.Count))
+                map.MapFrom(s => s.Reviews!.Count))
             .ForMember(dest => dest.Rating, map =>
-                map.MapFrom(s => s.Reviews.Count==0?0:s.Ratings.Sum(x => x.Score) / s.Ratings.Count));
+                map.MapFrom(s => s.Reviews != null && s.Reviews.Count==0?0:s.Ratings.Sum(x => x.Score) / s.Ratings.Count));
         profile.CreateMap<BookDto, Book>();
     }
 }

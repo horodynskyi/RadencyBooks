@@ -1,12 +1,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using RadencyBooks.Application.Dtos;
 using RadencyBooks.Application.Exceptions;
-using RadencyBooks.Application.Interfaces;
 using RadencyBooks.Application.Models;
 using RadencyBooks.Application.Services;
-using RadencyBooks.Infrastructure;
 
 namespace RadencyBooks.WEB.Controllers;
 
@@ -16,18 +13,15 @@ public class BookController : ControllerBase
 {
     private readonly IBookService _bookService;
     private readonly IMapper _mapper;
-    private readonly DataContext _context;
     private readonly AppSettings _appSettings;
 
     public BookController(
         IBookService bookService, 
         IMapper mapper, 
-        DataContext context, 
         AppSettings appSettings)
     {
         _bookService = bookService;
         _mapper = mapper;
-        _context = context;
         _appSettings = appSettings;
     }
 
@@ -60,12 +54,7 @@ public class BookController : ControllerBase
         await _bookService.DeleteBookAsync(id);
         return Ok();
     } 
-    [HttpGet("Test")]
-    public async Task<IActionResult> Test()
-    {
-        var a = _context.Set<Book>().EntityType.FindPrimaryKey();
-        return Ok(a);
-    } 
+   
     [HttpPost("/books/save")]
     public async Task<IActionResult> SaveBook(BookCreateDto bookDto)
     {
