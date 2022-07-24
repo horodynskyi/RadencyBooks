@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RadencyBooks.Application.Models;
 
@@ -19,24 +20,7 @@ public class DataContext:DbContext
     public DbSet<Rating> Ratings { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder
-            .Entity<Book>()
-            .HasKey(x => x.Id);
-        modelBuilder
-            .Entity<Review>()
-            .HasKey(x => x.Id);
-        modelBuilder
-            .Entity<Rating>()
-            .HasKey(x => x.Id);
-        
-        modelBuilder.Entity<Rating>()
-            .HasOne(x => x.Book)
-            .WithMany(x => x.Ratings)
-            .HasForeignKey(x => x.BookId);
-        modelBuilder.Entity<Review>()
-            .HasOne(x => x.Book)
-            .WithMany(x => x.Reviews)
-            .HasForeignKey(x => x.BookId);  
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetAssembly(typeof(DataContext)));
         base.OnModelCreating(modelBuilder);
     }
 }
