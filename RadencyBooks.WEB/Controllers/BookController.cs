@@ -46,11 +46,12 @@ public class BookController : ControllerBase
         var res = _mapper.Map<BookListReviewDto>(book);
         return Ok(res);
     }  
-    [HttpDelete("/books/{secret}")]
-    public async Task<IActionResult> DeleteBook(string secret, int id)
+    [HttpDelete("/books/{id}/")]
+    public async Task<IActionResult> DeleteBook(int id ,[FromQuery]string secret)
     {
         if (secret != _appSettings.SecretKey)
             throw new ProvidedSecretKeyIsNotValidException(secret);
+
         await _bookService.DeleteBookAsync(id);
         return Ok();
     } 
